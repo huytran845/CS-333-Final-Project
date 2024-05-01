@@ -1,47 +1,59 @@
 #Author: Huy Tran
 #CS 333 Testing Dev Ops
-#2/26/2024
+#5/7/2024
 
 import unittest
 from player import Player
 from card import Card
 
 class TestPlayerMethods(unittest.TestCase):
-	def test_addAceToHand(self):
-		newPlayer = Player()
-		testCard = Card("10", "Spades")
-		aceCard = Card("Ace", "Hearts")
-
-		newPlayer.addCardToHand(testCard)
-		newPlayer.addCardToHand(aceCard)
-		self.assertEqual(newPlayer.handValue, 21) #Ace becomes 11 since it doesn't bust the player
-		newPlayer.addCardToHand(aceCard)
-		self.assertEqual(newPlayer.handValue, 22) #Ace is 1 since 11 would significantly overbust the player
-
-	def test_addFaceToHand(self):
-		newPlayer = Player()
-		testCard = Card("Jack", "Clubs")
-		newPlayer.addCardToHand(testCard)
-		self.assertEqual(newPlayer.handValue, 10) #Every instance of a face card should always just add 10 to the value
-		testCard = Card("Queen", "Diamonds")
-		newPlayer.addCardToHand(testCard)
-		self.assertEqual(newPlayer.handValue, 20)
-		testCard = Card("King", "Spades")
-		newPlayer.addCardToHand(testCard)
-		self.assertEqual(newPlayer.handValue, 30)
-
-	def test_addNumberToHand(self):
-		newPlayer = Player()
+	def test_addCardToHand(self):
+		newPlayer = Player("Test Player")
 		testCard = Card("10", "Hearts")
 		newPlayer.addCardToHand(testCard)
-		self.assertEqual(newPlayer.handValue, 10)
-		testCard = Card("2", "Hearts")
-		newPlayer.addCardToHand(testCard)
-		self.assertEqual(newPlayer.handValue, 12)
-		testCard = Card("4", "Hearts")
-		newPlayer.addCardToHand(testCard)
-		self.assertEqual(newPlayer.handValue, 16)
+		self.assertEqual(str(newPlayer.hand[0]), "10 of Hearts")
 
+	def test_removeCardInHand(self):
+		newPlayer = Player("Test Player")
+		testCard = Card("10", "Hearts")
+		newPlayer.addCardToHand(testCard)
+		self.assertEqual(len(newPlayer.hand), 1)
+		newPlayer.removeCardInHand(testCard)
+		self.assertEqual(len(newPlayer.hand), 0)
+
+	def test_hasValue(self):
+		newPlayer = Player("Test Player")
+		testCard = Card("10", "Hearts")
+		newPlayer.addCardToHand(testCard)
+		self.assertTrue(newPlayer.hasValue("10"))
+
+	def test_hasNoValue(self):
+		newPlayer = Player("Test Player")
+		testCard = Card("10", "Hearts")
+		newPlayer.addCardToHand(testCard)
+		self.assertFalse(newPlayer.hasValue("Ace"))
+	
+	def test_countNumValues(self):
+		newPlayer = Player("Test Player")
+		testCard = Card("10", "Hearts")
+		testCard2 = Card("10", "Spades")
+		testCard3 = Card("1", "Hearts")
+		newPlayer.addCardToHand(testCard)
+		newPlayer.addCardToHand(testCard2)
+		newPlayer.addCardToHand(testCard3)
+		self.assertEqual(newPlayer.countNumValue("10"), 2)
+
+	def test_getBooks(self):
+		newPlayer = Player("Test Player")
+		testCard = Card("10", "Hearts")
+		testCard2 = Card("10", "Spades")
+		testCard3 = Card("10", "Clubs")
+		testCard4 = Card("10", "Diamonds")
+		newPlayer.addCardToHand(testCard)
+		newPlayer.addCardToHand(testCard2)
+		newPlayer.addCardToHand(testCard3)
+		newPlayer.addCardToHand(testCard4)
+		self.assertEqual(newPlayer.getBooks(), ["10"])
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,6 +1,6 @@
 #Author: Huy Tran
 #CS 333 Testing Dev Ops
-#2/26/2024
+#5/7/2024
 
 import unittest
 from card import Card
@@ -10,6 +10,10 @@ class TestCardMethods(unittest.TestCase):
 		testCard = Card("10", "Hearts")
 		self.assertEqual(testCard.value, "10")
 		self.assertEqual(testCard.suit, "Hearts")
+	
+	def test_cardName(self):
+		testCard = Card("10", "Hearts")
+		self.assertEqual(str(testCard), "10 of Hearts")
 		
 
 if __name__ == '__main__':

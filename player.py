@@ -1,6 +1,6 @@
 #Author: Huy Tran
 #CS 333 Testing Dev Ops
-#2/26/2024
+#5/7/2024
 
 from card import Card
 
@@ -17,14 +17,14 @@ class Player:
 
 	def hasValue(self, value):
 		for card in self.hand:
-			if card.values == value:
+			if card.value == value:
 				return True
 		return False
 	
 	def countNumValue(self, value):
 		count = 0
 		for card in self.hand:
-			if card.values == value:
+			if card.value == value:
 				count += 1
 		return count
 	
