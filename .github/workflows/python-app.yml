@@ -41,7 +41,7 @@ jobs:
           pytest test_player.py --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
           pytest test_gofish.py --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
           pytest test_main.py --doctest-modules --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
-        name: Create coverage report
+      - name: Create coverage report
         run: |
           python3 -m pip install coverage
           python3 -m coverage run -a test_card.py
@@ -49,4 +49,4 @@ jobs:
           python3 -m coverage run -a test_player.py
           python3 -m coverage run -a test_gofish.py
           python3 -m coverage run -a test_main.py
-          python3 -m coverage report 
+          python3 -m coverage report
