@@ -3,7 +3,6 @@
 #5/7/2024
 
 from gofish import GoFish
-from player import Player
 from card import Card
 
 def main():
