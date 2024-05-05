@@ -6,6 +6,7 @@ from gofish import GoFish
 from card import Card
 
 def main():
+	print("Why, Hello There")
 	while True:
 		try:
 			numPlayers = int(input("How many people are playing? "))
