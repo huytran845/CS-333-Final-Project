@@ -21,6 +21,20 @@ class TestPlayerMethods(unittest.TestCase):
 		newPlayer.removeCardInHand(testCard)
 		self.assertEqual(len(newPlayer.hand), 0)
 
+	def test_removeSameCards(self):
+		newPlayer = Player("Test Player")
+		sameValCard1 = Card("10", "Hearts")
+		sameValCard2 = Card("10", "Spades")
+		testCard = Card("9", "Clubs")
+		newPlayer.addCardToHand(sameValCard1)
+		newPlayer.addCardToHand(sameValCard2)
+		newPlayer.addCardToHand(sameValCard1)
+		newPlayer.addCardToHand(sameValCard2)	
+		newPlayer.addCardToHand(testCard)
+		self.assertEqual(len(newPlayer.hand), 5)
+		newPlayer.removeSameCards("10")
+		self.assertEqual(len(newPlayer.hand), 1)
+
 	def test_hasValue(self):
 		newPlayer = Player("Test Player")
 		testCard = Card("10", "Hearts")

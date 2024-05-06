@@ -8,12 +8,16 @@ class Player:
 	def __init__(self, playerName):
 		self.name = playerName
 		self.hand = []
+		self.totalBooks = 0
 	
 	def addCardToHand(self, card):
 		self.hand.append(card)
 
 	def removeCardInHand(self, card):
 		self.hand.remove(card)
+
+	def removeSameCards(self, value):
+		self.hand = [card for card in self.hand if card.value != value]
 
 	def hasValue(self, value):
 		for card in self.hand:

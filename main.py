@@ -3,13 +3,14 @@
 #5/7/2024
 
 from gofish import GoFish
-from card import Card
 
 def main():
-	print("Why, Hello There")
 	while True:
 		try:
 			numPlayers = int(input("How many people are playing? "))
+			while numPlayers <= 0 or numPlayers == 1:
+				print("Invalid number of players, please try again!")
+				numPlayers = int(input("How many people are playing? "))
 			break
 		except ValueError:
 			print("Invalid value, please enter a number!")
@@ -24,20 +25,25 @@ def main():
 	while True:
 		currentPlayer = goFish.getCurrentPlayer()
 
-		print("\nCards in " + currentPlayer.name + "'s hand:")
-		for card in currentPlayer.hand:
-			print(card)
-
 		currentBooks = currentPlayer.getBooks()
 		for book in currentBooks:
 			print("\n" + currentPlayer.name + " has acquired four of " + book + "s!")
 			for player in goFish.players:
-				if player != currentPlayer:
-					player.removeCardInHand(Card("", book))
+				if player == currentPlayer:
+					player.removeSameCards(book)
+					player.totalBooks += 1
+					goFish.books += 1
+		
+		if goFish.books == 13:
+			break
+
+		print("\nCards in " + currentPlayer.name + "'s hand:")
+		for card in currentPlayer.hand:
+			print(card)
 		
 		requestedValue = input("\n" + currentPlayer.name + ", what card value would you like to ask for? Ace, 2-10, Jack-King: ")
 		currentValues = [card.value for card in currentPlayer.hand]
-		if not requestedValue in Card.values:
+		if not requestedValue in GoFish.values:
 			print("Invalid value! Please try again!")
 			continue
 		elif not requestedValue in currentValues:
@@ -72,17 +78,21 @@ def main():
 				currentPlayer.addCardToHand(card)
 		
 		for player in goFish.players:
-			if len(player.hand) == 0:
-				print(player.name + " has no more cards in their hand.")
+			if len(player.hand) == 0 and len(goFish.startDeck) == 0:
+				print(player.name + " has no more cards in their hand and is unable to draw.")
 				books = player.getBooks()
 				for book in books:
 					print("\n" + player.name + " has acquired four of " + book + "s!")
-				goFish.players.remove(player)
-				if len(goFish.players) == 1:
-					print(goFish.players[0].name + " won the game!")
-					return 0
+				goFish.finishPlayers(player)
 	
 		goFish.advancePlayer()
+
+	winner = goFish.removedPlayers[0]
+	for player in goFish.removedPlayers.copy():
+		if player.totalBooks > winner.totalBooks:
+			winner = player
+	
+	print(winner.name + " has won the game with " + str(winner.totalBooks) + " books!")
 
 if __name__ == "__main__":
 	main()

@@ -4,14 +4,17 @@
 
 from player import Player
 from deck import Deck
-from card import Card
 
 class GoFish:
+	values = ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"]
+
 	def __init__(self, numPlayers, playerNames):
 		self.startDeck = Deck()
 		self.startDeck.shuffleDeck()
 		self.players = []
+		self.removedPlayers = []
 		self.currentPlayer = 0
+		self.books = 0
 		for i in range(numPlayers):
 			name = playerNames[i]
 			newPlayer = Player(name)
@@ -35,3 +38,7 @@ class GoFish:
 		for i in range (cardsDealt):
 			for player in self.players:
 				player.addCardToHand(self.startDeck.dealCard())
+
+	def finishPlayers(self, player):
+		self.players.remove(player)
+		self.removedPlayers.append(player)

@@ -39,6 +39,15 @@ class TestGoFishMethods(unittest.TestCase):
 		firstPlayer = bigGame.getCurrentPlayer()
 		self.assertEqual(len(firstPlayer.hand), 5)
 
+	def test_finishPlayers(self):
+		smallGame = GoFish(3, self.playerNames)
+		self.assertEqual(len(smallGame.players), 3)
+		self.assertEqual(len(smallGame.removedPlayers), 0)
+		for player in smallGame.players.copy():
+			smallGame.finishPlayers(player)
+		self.assertEqual(len(smallGame.players), 0)
+		self.assertEqual(len(smallGame.removedPlayers), 3)
+
 
 if __name__ == '__main__':
     unittest.main()
