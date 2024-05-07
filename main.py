@@ -6,6 +6,7 @@ from gofish import GoFish
 
 def main():
 	while True:
+		print("Hello this is a test CS 333")
 		try:
 			numPlayers = int(input("How many people are playing? "))
 			while numPlayers <= 0 or numPlayers == 1:
